@@ -2,6 +2,9 @@
     --background: #e9ecef;
     --border: #dee2e6;
     --black: rgb(50,50,50);
+    --invalid: red;
+    --ok: dodgerblue;
+    --button: dodgerblue;
 }
 
 body, h1{
@@ -69,13 +72,26 @@ tbody tr:nth-child(odd)
     padding: 0 0.5rem;
     margin: 0.25rem;
     height: 2em;
+    transition: 0.3s;
+}
+
+.form-container div input:hover{
+    box-shadow: 0 0 10px var(--ok);
+}
+
+.form-container div input:invalid, .form-container div input.is-invalid {
+    box-shadow: 0 0 5px var(--invalid);
+}
+
+.form-container div input:hover:invalid, .form-container div input:hover.is-invalid{
+    box-shadow: 0 0 10px var(--invalid);
 }
 
 button {
     margin: 0.25rem;
     border: none;
     border-radius: 5px;
-    background-color: dodgerblue;
+    background-color: var(--button);
     color: white;
     font-weight: bold;
     height: 2rem;

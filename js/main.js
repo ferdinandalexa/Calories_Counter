@@ -27,15 +27,16 @@ const attrToString = (obj = {}) =>
     const keys = Object.keys(obj);
     const attr = [];
 
-    attr.push(keys.map(key =>
+    keys.map(key => 
     {
-        return `${key}="${obj[key]}"`
-    }))
+        attr.push(`${key}="${obj[key]}"`)
+    })
 
     const attrString = attr.join(' ');
 
+    console.log(attr);
     console.log(attrString);
-    
+
     return attrString;
 }
 
@@ -58,6 +59,7 @@ const tag = nameTag =>
 };
 
 const tableRowTag = tag('tr');
+// const tableRow = (items) => tableRowTag(tableCells(items));
 const tableRow = (items) => compose(tableRowTag, tableCells)(items);
 
 const tableCell = tag('td');
@@ -71,6 +73,7 @@ const add = (list) =>
         carbs: parseInt($CARBS.value),
         protein: parseInt($PROTEIN.value),
     }
+
 
     list.push(newItem);
     console.log(list);
@@ -88,7 +91,7 @@ const updateTotal = () =>
 {
     let calories = 0, carbs = 0, protein = 0;
 
-    itemsList.map(item =>
+    itemsList.map((item) =>
     {
         calories += item.calories;
         carbs += item.carbs;
@@ -104,12 +107,24 @@ const renderItems = () =>
 {
     const $TBODY = document.getElementById('list-items');
 
-    const rows = itemsList.map(item =>
+    const rows = itemsList.map((item,index) =>
     {
-        return tableRow([item.description, item.calories, item.carbs, item.protein]);
+        
+        const buttonTag = tag(
+            {
+                tag: 'button',
+                attrs:
+                {
+                    class: 'remove',
+                    onclick: `removeItem(${index})`,
+                }
+            })('X');
+
+        const button = tag('td')(buttonTag)
+        return tableRow([item.description, item.calories, item.carbs, item.protein, button]);
     }).join('');
 
-    $TBODY.innerHTML = rows;
+    $TBODY.innerHTML += rows;
 }
 
 const validateInputs = () =>

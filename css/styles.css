@@ -1,18 +1,21 @@
 :root {
     --background: #e9ecef;
     --border: #dee2e6;
-    --black: rgb(50,50,50);
+    --black: rgb(50, 50, 50);
     --invalid: red;
+    --remove-default: gainsboro;
+    --remove-hover: red;
     --ok: dodgerblue;
     --button: dodgerblue;
+    --button-hover: rgb(28, 125, 221);
 }
 
-body, h1{
+body, h1 {
     font-family: Arial, Helvetica, sans-serif;
     color: var(--black);
 }
 
-.container{
+.container {
     border-radius: 10px;
     margin: auto;
     margin-top: 100px;
@@ -28,7 +31,7 @@ body, h1{
     padding: 1rem;
 }
 
-[class*=-container]{
+[class*=-container] {
     padding: 2rem;
 }
 
@@ -48,13 +51,12 @@ table, th, td {
     font-weight: bold;
 }
 
-tbody tr:nth-child(odd)
-{
+tbody tr:nth-child(odd) {
     background-color: var(--background);
     border-spacing: 1rem;
 }
 
-.form-container{
+.form-container {
     background-color: var(--background);
     border-top: 1px solid var(--border);
 }
@@ -65,7 +67,7 @@ tbody tr:nth-child(odd)
     justify-content: space-between;
 }
 
-.form-container div input{
+.form-container div input {
     border: var(--border);
     border-radius: 5px;
     font-size: 1rem;
@@ -75,7 +77,7 @@ tbody tr:nth-child(odd)
     transition: 0.3s;
 }
 
-.form-container div input:hover{
+.form-container div input:hover {
     box-shadow: 0 0 10px var(--ok);
 }
 
@@ -83,7 +85,7 @@ tbody tr:nth-child(odd)
     box-shadow: 0 0 5px var(--invalid);
 }
 
-.form-container div input:hover:invalid, .form-container div input:hover    .is-invalid{
+.form-container div input:hover:invalid, .form-container div input:hover .is-invalid {
     box-shadow: 0 0 10px var(--invalid);
 }
 
@@ -91,9 +93,30 @@ button {
     margin: 0.25rem;
     border: none;
     border-radius: 5px;
-    background-color: var(--button);
     color: white;
     font-weight: bold;
     height: 2rem;
     width: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    transform: scale(1.2);
+}
+
+button:active{
+    transform: scale(0.8);
+}
+
+button.add {
+    background-color: var(--button);
+}
+
+button.remove {
+    background-color: var(--remove-default);
+}
+
+button.remove:hover {
+    background-color: var(--remove-hover);
 }

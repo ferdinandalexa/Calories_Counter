@@ -14,6 +14,7 @@ const $DESC = document.getElementById('description');
 const $CALORIES = document.getElementById('calories');
 const $CARBS = document.getElementById('carbs');
 const $PROTEIN = document.getElementById('protein');
+
 const $ADD_BUTTON = document.getElementById('add');
 
 const IS_INVALID = 'is-invalid'
@@ -81,13 +82,33 @@ const clearInputs = () =>
     $PROTEIN.value = '';
 }
 
+const updateTotal = () =>
+{
+    let calories = 0, carbs = 0, protein = 0;
+
+    itemsList.map(item =>
+    {
+        calories += item.calories;
+        carbs += item.carbs;
+        protein += item.protein;
+    });
+
+    document.getElementById('total-calories').textContent = calories;
+    document.getElementById('total-carbs').textContent = carbs;
+    document.getElementById('total-protein').textContent = protein;
+}
+
+const renderItems= items => {
+    
+}
+
 const validateInputs = () =>
 {
-
     if ($DESC.value && $CALORIES.value && $CARBS.value && $PROTEIN.value)
     {
         add(itemsList);
         clearInputs();
+        updateTotal();
     }
     else
     {

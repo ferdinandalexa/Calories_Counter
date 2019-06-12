@@ -83,7 +83,7 @@ tbody tr:nth-child(odd)
     box-shadow: 0 0 5px var(--invalid);
 }
 
-.form-container div input:hover:invalid, .form-container div input:hover.is-invalid{
+.form-container div input:hover:invalid, .form-container div input:hover    .is-invalid{
     box-shadow: 0 0 10px var(--invalid);
 }
 

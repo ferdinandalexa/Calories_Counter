@@ -29,11 +29,13 @@ const attrToString = (obj = {}) =>
 
     attr.push(keys.map(key =>
     {
-        return `${key}=${obj[key]}`
+        return `${key}="${obj[key]}"`
     }))
 
-    const attrString = attr.join();
+    const attrString = attr.join(' ');
 
+    console.log(attrString);
+    
     return attrString;
 }
 

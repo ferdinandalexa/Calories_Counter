@@ -124,7 +124,7 @@ const renderItems = () =>
         return tableRow([item.description, item.calories, item.carbs, item.protein, button]);
     }).join('');
 
-    $TBODY.innerHTML += rows;
+    $TBODY.innerHTML = rows;
 }
 
 const validateInputs = () =>

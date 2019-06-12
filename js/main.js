@@ -34,9 +34,6 @@ const attrToString = (obj = {}) =>
 
     const attrString = attr.join(' ');
 
-    console.log(attr);
-    console.log(attrString);
-
     return attrString;
 }
 
@@ -85,6 +82,12 @@ const clearInputs = () =>
     $CALORIES.value = '';
     $CARBS.value = '';
     $PROTEIN.value = '';
+}
+
+const removeItem = index => {
+    itemsList.splice(index,1);
+    updateTotal()
+    renderItems();
 }
 
 const updateTotal = () =>

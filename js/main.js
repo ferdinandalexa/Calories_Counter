@@ -98,8 +98,16 @@ const updateTotal = () =>
     document.getElementById('total-protein').textContent = protein;
 }
 
-const renderItems= items => {
-    
+const renderItems = () =>
+{
+    const $TBODY = document.getElementById('list-items');
+
+    const rows = itemsList.map(item =>
+    {
+        return tableRow([item.description, item.calories, item.carbs, item.protein]);
+    }).join('');
+
+    $TBODY.innerHTML = rows;
 }
 
 const validateInputs = () =>
@@ -109,6 +117,7 @@ const validateInputs = () =>
         add(itemsList);
         clearInputs();
         updateTotal();
+        renderItems();
     }
     else
     {

@@ -27,10 +27,10 @@ const attrToString = (obj = {}) =>
     const keys = Object.keys(obj);
     const attr = [];
 
-    keys.map(() =>
+    attr.push(keys.map(key =>
     {
-        attr.push(`${keys}=${obj[keys]}`)
-    })
+        return `${key}=${obj[key]}`
+    }))
 
     const attrString = attr.join();
 

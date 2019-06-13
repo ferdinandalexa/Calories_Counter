@@ -21,21 +21,10 @@ const IS_INVALID = 'is-invalid'
 
 let itemsList = [];
 
-
 const attrToString = (obj = {}) =>
-{
-    const keys = Object.keys(obj);
-    const attr = [];
-
-    keys.map(key => 
-    {
-        attr.push(`${key}="${obj[key]}"`)
-    })
-
-    const attrString = attr.join(' ');
-
-    return attrString;
-}
+    Object.keys(obj)
+        .map(key => `${key}="${obj[key]}"`)
+        .join(' ')
 
 // console.log(attrToString({'class': 'title'}));
 const tagAttrs = obj => (content = '') =>
@@ -43,17 +32,8 @@ const tagAttrs = obj => (content = '') =>
 
 // console.log(tagAttrs({tag: 'tr'})( ' Hola, mundo '));
 
-const tag = nameTag => 
-{
-    if (typeof nameTag === 'string')
-    {
-        return tagAttrs({ tag: nameTag });
-    }
-    else
-    {
-        return tagAttrs(nameTag);
-    }
-};
+const tag = nameTag =>
+    typeof nameTag === 'string' ? tagAttrs({ tag: nameTag }) : tagAttrs(nameTag);
 
 const tableRowTag = tag('tr');
 // const tableRow = (items) => tableRowTag(tableCells(items));
@@ -84,8 +64,9 @@ const clearInputs = () =>
     $PROTEIN.value = '';
 }
 
-const removeItem = index => {
-    itemsList.splice(index,1);
+const removeItem = index =>
+{
+    itemsList.splice(index, 1);
     updateTotal()
     renderItems();
 }
@@ -110,9 +91,9 @@ const renderItems = () =>
 {
     const $TBODY = document.getElementById('list-items');
 
-    const rows = itemsList.map((item,index) =>
+    const rows = itemsList.map((item, index) =>
     {
-        
+
         const buttonTag = tag(
             {
                 tag: 'button',

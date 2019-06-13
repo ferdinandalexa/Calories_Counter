@@ -94,7 +94,17 @@ const renderItems = () =>
     const rows = itemsList.map((item, index) =>
     {
 
-        const buttonTag = tag(
+        // const buttonTag = tag(
+        //     {
+        //         tag: 'button',
+        //         attrs:
+        //         {
+        //             class: 'remove',
+        //             onclick: `removeItem(${index})`,
+        //         }
+        //     })('X');
+
+        const buttonsArray = [
             {
                 tag: 'button',
                 attrs:
@@ -102,10 +112,22 @@ const renderItems = () =>
                     class: 'remove',
                     onclick: `removeItem(${index})`,
                 }
-            })('X');
+            },
+            {
+                tag: 'button',
+                attrs:
+                {
+                    class: 'edit',
+                    onclick: `editItem(${index})`,
+                }
+            },
+        ]
 
-        const button = tag('td')(buttonTag)
-        return tableRow([item.description, item.calories, item.carbs, item.protein, button]);
+        const buttons = buttonsArray.map(item => tag(item)('')).join('');
+        console.log(buttons);
+
+        // const button = tag('td')(buttonTag)
+        return tableRow([item.description, item.calories, item.carbs, item.protein, buttons]);
     }).join('');
 
     $TBODY.innerHTML = rows;

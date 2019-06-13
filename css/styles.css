@@ -3,7 +3,7 @@
     --border: #dee2e6;
     --black: rgb(50, 50, 50);
     --invalid: red;
-    --remove-default: gainsboro;
+    --button-default: gainsboro;
     --remove-hover: red;
     --ok: dodgerblue;
     --button: dodgerblue;
@@ -113,10 +113,27 @@ button.add {
     background-color: var(--button);
 }
 
+button.remove::before{
+    content: "X";
+}
+
 button.remove {
-    background-color: var(--remove-default);
+    background-color: var(--button-default);
 }
 
 button.remove:hover {
     background-color: var(--remove-hover);
+}
+
+button.edit::before{
+    content: "MOD";
+}
+
+button.edit {
+    width: max-content;
+    background-color: var(--button-default);
+}
+
+button.edit:hover {
+    background-color: var(--button);
 }

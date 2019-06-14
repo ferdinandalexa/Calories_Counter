@@ -26,18 +26,19 @@ const attrToString = (obj = {}) =>
         .map(key => `${key}="${obj[key]}"`)
         .join(' ')
 
-// console.log(attrToString({'class': 'title'}));
 const tagAttrs = obj => (content = '') =>
     `<${obj.tag}${obj.attrs ? ' ' : ''}${attrToString(obj.attrs)}> ${content} </${obj.tag}>`;
 
-// console.log(tagAttrs({tag: 'tr'})( ' Hola, mundo '));
+const inputAttrs = obj =>
+    `<${obj.tag}${obj.attrs ? ' ' : ''}${attrToString(obj.attrs)}>`;
 
 const tag = nameTag =>
     typeof nameTag === 'string' ? tagAttrs({ tag: nameTag }) : tagAttrs(nameTag);
 
-const tableRowTag = tag('tr');
-// const tableRow = (items) => tableRowTag(tableCells(items));
-const tableRow = (items) => compose(tableRowTag, tableCells)(items);
+const inputTag = nameTag =>
+    typeof nameTag === 'string' ? inputAttrs({ tag: nameTag }) : inputAttrs(nameTag);
+
+// const tableRow = (items) => tableRowTag(tableCells(items))
 
 const tableCell = tag('td');
 const tableCells = items => items.map(tableCell).join('');
@@ -71,6 +72,39 @@ const removeItem = index =>
     renderItems();
 }
 
+const editItem = index =>
+{
+    const $rowToEdit = document.querySelectorAll(`#list-item-${index} td input`);
+    const $buttonMOD = document.querySelector(`#list-item-${index} td .edit`)
+
+    if ($buttonMOD.getAttribute('data-status') == 'start')
+    {
+        Array.prototype.map.call($rowToEdit, item => { item.disabled = false; item.classList.add('enabled') });
+        $buttonMOD.setAttribute('data-status', 'finish')
+    }
+    else
+    {
+        const newItem = {
+            description: $rowToEdit[0].value,
+            calories: parseInt($rowToEdit[1].value),
+            carbs: parseInt($rowToEdit[2].value),
+            protein: parseInt($rowToEdit[3].value),
+        }
+
+        itemsList[index].description = newItem.description;
+        itemsList[index].calories = newItem.calories;
+        itemsList[index].carbs = newItem.carbs;
+        itemsList[index].protein = newItem.protein;
+        
+        Array.prototype.map.call($rowToEdit, item => { item.disabled = true; item.classList.remove('enabled') });
+        $buttonMOD.setAttribute('data-status', 'start')
+
+        updateTotal();
+
+        console.log('Elementos Editados');
+    }
+}
+
 const updateTotal = () =>
 {
     let calories = 0, carbs = 0, protein = 0;
@@ -91,18 +125,57 @@ const renderItems = () =>
 {
     const $TBODY = document.getElementById('list-items');
 
+
     const rows = itemsList.map((item, index) =>
     {
+        const tableRowTag = tag({ tag: 'tr', attrs: { id: `list-item-${index}` } });
 
-        // const buttonTag = tag(
-        //     {
-        //         tag: 'button',
-        //         attrs:
-        //         {
-        //             class: 'remove',
-        //             onclick: `removeItem(${index})`,
-        //         }
-        //     })('X');
+        const tableRow = (items) => compose(tableRowTag, tableCells)(items);
+
+        const descriptionInput = {
+            tag: 'input',
+            attrs: {
+                type: 'text',
+                name: 'description',
+                disabled: 'true',
+                value: item.description,
+            }
+        };
+
+        const caloriesInput = {
+            tag: 'input',
+            attrs: {
+                type: 'number',
+                name: 'calories',
+                disabled: 'true',
+                value: item.calories,
+            }
+        };
+
+        const carbsInput = {
+            tag: 'input',
+            attrs: {
+                type: 'number',
+                name: 'carbs',
+                disabled: item.carbs,
+                value: item.carbs,
+            }
+        };
+
+        const proteinInput = {
+            tag: 'input',
+            attrs: {
+                type: 'number',
+                name: 'protein',
+                disabled: 'true',
+                value: item.protein,
+            }
+        };
+
+        const description = inputAttrs(descriptionInput);
+        const calories = inputAttrs(caloriesInput);
+        const carbs = inputAttrs(carbsInput);
+        const protein = inputAttrs(proteinInput);
 
         const buttonsArray = [
             {
@@ -119,15 +192,14 @@ const renderItems = () =>
                 {
                     class: 'edit',
                     onclick: `editItem(${index})`,
+                    'data-status': 'start',
                 }
             },
         ]
 
         const buttons = buttonsArray.map(item => tag(item)('')).join('');
-        console.log(buttons);
 
-        // const button = tag('td')(buttonTag)
-        return tableRow([item.description, item.calories, item.carbs, item.protein, buttons]);
+        return tableRow([description, calories, carbs, protein, buttons]);
     }).join('');
 
     $TBODY.innerHTML = rows;

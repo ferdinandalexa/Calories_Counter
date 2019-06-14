@@ -6,6 +6,7 @@
     --button-default: gainsboro;
     --remove-hover: red;
     --ok: dodgerblue;
+    --edit:limegreen ;
     --button: dodgerblue;
     --button-hover: rgb(28, 125, 221);
 }
@@ -67,7 +68,7 @@ tbody tr:nth-child(odd) {
     justify-content: space-between;
 }
 
-.form-container div input {
+input {
     border: var(--border);
     border-radius: 5px;
     font-size: 1rem;
@@ -77,15 +78,29 @@ tbody tr:nth-child(odd) {
     transition: 0.3s;
 }
 
-.form-container div input:hover {
+table input {
+    width: 100px;
+    text-align: center;
+    color: var(--black);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    background: transparent;
+}
+
+table input.enabled {
+    background: white;
+    /* box-shadow: 0 2px 5px var(--edit); */
+    -webkit-appearance: scrollbartrack-vertical;
+    -moz-appearance: scrollbartrack-vertical ;
+}
+
+.form-container div input:focus  {
     box-shadow: 0 0 10px var(--ok);
 }
 
-.form-container div input:invalid, .form-container div input.is-invalid {
-    box-shadow: 0 0 5px var(--invalid);
-}
-
-.form-container div input:hover:invalid, .form-container div input:hover .is-invalid {
+.form-container div input:invalid, 
+.form-container div input.is-invalid, 
+table input.is-invalid  {
     box-shadow: 0 0 10px var(--invalid);
 }
 
@@ -135,5 +150,5 @@ button.edit {
 }
 
 button.edit:hover {
-    background-color: var(--button);
+    background-color: var(--edit);
 }

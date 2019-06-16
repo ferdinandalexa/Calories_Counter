@@ -124,8 +124,7 @@ const updateTotal = () =>
 const renderItems = () =>
 {
     const $TBODY = document.getElementById('list-items');
-
-
+    
     const rows = itemsList.map((item, index) =>
     {
         const tableRowTag = tag({ tag: 'tr', attrs: { id: `list-item-${index}` } });
@@ -232,3 +231,15 @@ $CALORIES.addEventListener('keyup', () => { $CALORIES.classList.remove(IS_INVALI
 $CARBS.addEventListener('keyup', () => { $CARBS.classList.remove(IS_INVALID) });
 
 $PROTEIN.addEventListener('keyup', () => { $PROTEIN.classList.remove(IS_INVALID) });
+
+window.addEventListener('beforeunload', () => { localStorage.setItem('items', JSON.stringify(itemsList)) });
+
+(() =>
+{
+    items = JSON.parse(localStorage.getItem('items'));
+    console.log(items);
+    items.length === 0 ? 0
+        : itemsList = items,
+        updateTotal(),
+        renderItems();
+})();
